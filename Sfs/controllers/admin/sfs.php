@@ -45,7 +45,6 @@ class Sfs extends Module_Admin
 		
 		// Settings to save
 		$settings = array(
-			'api_user',
 			'api_key',
 			'track',
 			'evidence_input',
@@ -75,6 +74,22 @@ class Sfs extends Module_Admin
 		
 		// Answer
 		$this->success(lang('ionize_message_operation_ok'));				
+	}
+
+
+	public function test()
+	{
+		$this->load->library('Sfs_Sfs', '', 'sfs');
+
+		$this->template['result'] = $this->sfs->test_api(
+			array(
+				'api_key' => $this->input->post('api_key'),
+				'evidence_input' => $this->input->post('evidence_input'),
+				'username_input' => $this->input->post('username_input'),
+			)
+		);
+
+		$this->output('admin/test');
 	}
 	
 }

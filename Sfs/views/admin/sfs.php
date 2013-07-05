@@ -36,22 +36,6 @@
 		<div class="tabcontent">
 		
 			<form id="sfsSettingsForm" name="sfsSettingsForm" method="post">
-			
-				<!-- API User -->
-				<dl>
-					<dt><label for="module_sfs_api_user"><?php echo lang('module_sfs_label_api_user'); ?></label></dt>
-					<dd>
-						<input class="inputtext w240" type="text" name="api_user" id="module_sfs_api_user" value="<?php echo config_item('api_user'); ?>" />
-					</dd>
-				</dl>
-
-				<!-- API Key -->
-				<dl>
-					<dt><label for="module_sfs_api_key"><?php echo lang('module_sfs_label_api_key'); ?></label></dt>
-					<dd>
-						<input class="inputtext w240" type="text" name="api_key" id="module_sfs_api_key" value="<?php echo config_item('api_key'); ?>" />
-					</dd>
-				</dl>
 
 				<!-- Forms registered events -->
 				<dl>
@@ -61,7 +45,6 @@
 					</dd>
 				</dl>
 
-
 				<!-- Track spam -->
 				<dl>
 					<dt><label for="module_sfs_track" title="<?php echo lang('module_sfs_track_help') ?>"><?php echo lang('module_sfs_track'); ?></label></dt>
@@ -70,31 +53,44 @@
 					</dd>
 				</dl>
 
-				<!-- Evidence input name -->
-				<dl>
-					<dt><label for="module_sfs_evidence_input" title="<?php echo lang('module_sfs_evidence_input_help') ?>"><?php echo lang('module_sfs_evidence_input'); ?></label></dt>
-					<dd>
-						<input class="inputtext w240" type="text" name="evidence_input" id="module_sfs_evidence_input" value="<?php echo config_item('evidence_input'); ?>" />
-					</dd>
-				</dl>
+				<div id="sfsTrack">
+					<!-- API Key -->
+					<dl>
+						<dt><label for="module_sfs_api_key" title="<?php echo lang('module_sfs_api_key_help') ?>"><?php echo lang('module_sfs_label_api_key'); ?></label></dt>
+						<dd>
+							<input class="inputtext w240" type="text" name="api_key" id="module_sfs_api_key" value="<?php echo config_item('api_key'); ?>" />
+						</dd>
+					</dl>
 
-				<!-- Username input name -->
-				<dl>
-					<dt><label for="module_sfs_username_input" title="<?php echo lang('module_sfs_username_input_help') ?>"><?php echo lang('module_sfs_username_input'); ?></label></dt>
-					<dd>
-						<input class="inputtext w240" type="text" name="username_input" id="module_sfs_username_input" value="<?php echo config_item('username_input'); ?>" />
-					</dd>
-				</dl>
+					<!-- Evidence input name -->
+					<dl>
+						<dt><label for="module_sfs_evidence_input" title="<?php echo lang('module_sfs_evidence_input_help') ?>"><?php echo lang('module_sfs_evidence_input'); ?></label></dt>
+						<dd>
+							<input class="inputtext w240" type="text" name="evidence_input" id="module_sfs_evidence_input" value="<?php echo config_item('evidence_input'); ?>" />
+						</dd>
+					</dl>
+
+					<!-- Username input name -->
+					<dl>
+						<dt><label for="module_sfs_username_input" title="<?php echo lang('module_sfs_username_input_help') ?>"><?php echo lang('module_sfs_username_input'); ?></label></dt>
+						<dd>
+							<input class="inputtext w240" type="text" name="username_input" id="module_sfs_username_input" value="<?php echo config_item('username_input'); ?>" />
+						</dd>
+					</dl>
+				</div>
 
 				<!-- Submit button  -->
-				<dl class="last">
+				<dl class="mt10">
 					<dt>&#160;</dt>
 					<dd>
-						<input id="submit_config" type="submit" class="submit" value="<?php echo lang('ionize_button_save'); ?>" />
+						<a id="btnTestSettings" class="button mr10">Test settings</a>
+						<input id="submit_config" type="submit" class="submit" value="<?php echo lang('ionize_button_save_settings'); ?>" />
 					</dd>
 				</dl>
 		
 			</form>
+
+			<div id="testSettingsResult"></div>
 
 		</div>
 
@@ -146,5 +142,37 @@ ION.setFormSubmit(
 	'module/sfs/sfs/save_config' 	// URL of the controller's method which process data
 );
 
+
+$('btnTestSettings').addEvent('click', function(e)
+{
+	ION.HTML(
+		'module/sfs/sfs/test',
+		$('sfsSettingsForm'),
+		{
+			'update' : $('testSettingsResult')
+		}
+	);
+});
+
+
+toggleTrack = function()
+{
+	var track = $('module_sfs_track').getProperty('checked');
+
+	if (track)
+	{
+		$('sfsTrack').show();
+	}
+	else
+	{
+		$('sfsTrack').hide();
+	}
+}
+toggleTrack();
+
+$('module_sfs_track').addEvent('change', function()
+{
+	toggleTrack();
+});
 
 </script>
