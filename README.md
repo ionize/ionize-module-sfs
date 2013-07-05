@@ -30,6 +30,7 @@ It uses the spam database from : http://www.stopforumspam.com/
 * In the setup field "Event", set one event, for example "Myform.register.check"
 * Create one custom registration form, by editing /themes/your_theme/config/forms.php
 
+```php
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $config['forms'] = array
@@ -68,13 +69,13 @@ $config['forms'] = array
 		),
 	),
 );
-
+```
 
 * In the lib which processes your form data, fire the event you previously setup 
 (in this case "Myform.register.check") :
 To do that, create the file /themes/your_theme/libraries/Tagmanager/Register.php :
 
-
+```php
 <?php
 
 class TagManager_Register extends TagManager
@@ -110,4 +111,5 @@ class TagManager_Register extends TagManager
 		}
 	}
 }
+```
 
